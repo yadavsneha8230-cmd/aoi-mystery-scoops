@@ -22,7 +22,7 @@ body {
     color: var(--text-dark);
     background-color: var(--light-pink-bg);
     min-height: 100vh;
-    overflow-x: hidden;
+    overflow-x: auto;
 }
 
 /* Header & Nav */
@@ -493,6 +493,16 @@ nav ul li a:hover::after {
     gap: 30px;
     text-align: left;
 }
+@media (max-width: 768px) {
+    .hero-container,
+    .product-details-layout,
+    .cart-content-layout,
+    .products-grid {
+        grid-template-columns: 1fr;
+    }
+    nav { 
+        display: none; }
+}
 
 table {
     width: 100%;
@@ -533,12 +543,16 @@ table td {
     padding-top: 12px;
 }
 
-@media (max-width: 768px) {
-    .hero-container, .product-details-layout, .cart-content-layout, .products-grid {
+/* @media (max-width: 768px) {
+    .hero-container,
+    .product-details-layout,
+    .cart-content-layout,
+    .products-grid {
         grid-template-columns: 1fr;
     }
-    nav { display: none; }
-}
+    nav { 
+        display: none; }
+} */
 /* Checkout Section Formatting */
 .checkout-master-wrapper {
     max-width: 1200px;
