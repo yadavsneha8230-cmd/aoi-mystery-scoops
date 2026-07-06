@@ -310,5 +310,108 @@ function updateCheckoutSummaryCosts(subtotal) {
 
     if (chkGrandtotalField) {
         chkGrandtotalField.innerText = "₹" + finalTotal.toLocaleString('en-IN') + ".00";
+
     }
 }
+// new add now 
+// ==========================================
+// RAZORPAY CHECKOUT & PAYMENT HANDLER
+// ==========================================
+async function handleFormSubmit(e) {
+    e.preventDefault(); // Stops the page from refreshing when you click submit
+
+    // 1. Grab customer data from your HTML inputs
+    const customerData = {
+        name: document.getElementById('cust-fname').value + " " + document.getElementById('cust-lname').value,
+        email: document.getElementById('cust-email').value,
+        phone: document.getElementById('cust-phone').value
+    };
+
+    // 2. Calculate Final Total (Subtotal + Delivery)
+    let subtotal = 0;
+    cartState.forEach(item => subtotal += (item.price * item.qty));
+    
+    // Using the deliveryFee variable you defined at the top of your file (100)
+    const finalTotal = subtotal + deliveryFee; 
+
+    // 3. Update Button State to show it's loading
+    const payBtn = document.getElementById('pay-btn');
+    const originalText = payBtn.innerText;
+    payBtn.innerText = "Processing...";
+    payBtn.disabled = true;
+
+    try {
+        // 4. Ask your Node.js backend to create an Order ID
+        const response = await fetch('http://localhost:3000/create-order', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ amount: finalTotal })
+        });
+        
+        if (!response.ok) throw new Error("Backend not responding properly");
+        const data = await response.json();
+
+        // 5. Open Razorpay Popup
+        const options = {
+            "key": "rzp_test_TACbm478WmFfJF", // Your Razorpay Test Key
+            "amount": data.order.amount,
+            "currency": "INR",
+            "name": "AOI - Mystery Scoops",
+            "order_id": data.order.id,
+            "prefill": {
+                "name": customerData.name,
+                "email": customerData.email,
+                "contact": customerData.phone
+            },
+            "theme": { "color": "#ff63a5" },
+            "handler": async function (response) {
+                // 6. On Success: Verify payment with backend
+                const verifyRes = await fetch('http://localhost:3000/verify-payment', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(response)
+                });
+                const verifyData = await verifyRes.json();
+
+                if (verifyData.success) {
+                    // Show Congratulations Screen!
+                    document.getElementById('checkout-form-screen').style.display = 'none';
+                    document.getElementById('success-screen').style.display = 'flex'; 
+                    
+                    // Clear the cart
+                    localStorage.removeItem('aoi_cart_memory'); 
+                    cartState = [];
+                    if(document.getElementById('global-cart-counter')) {
+                         document.getElementById('global-cart-counter').innerText = "0";
+                    }
+                } else {
+                    alert("Payment verification failed! Please contact support.");
+                }
+            }
+        };
+
+        const rzp = new Razorpay(options);
+        
+        // 7. On Failure: Let user try again
+        rzp.on('payment.failed', function (response){
+            alert("Payment failed! Reason: " + response.error.description);
+            payBtn.innerText = originalText;
+            payBtn.disabled = false;
+        });
+
+        rzp.open();
+
+    } catch (error) {
+        console.error("Checkout Error:", error);
+        alert("Server error. Please make sure your Node.js backend (server.js) is running in the terminal!");
+        payBtn.innerText = originalText;
+        payBtn.disabled = false;
+    }
+}
+
+
+
+
+
+
+
