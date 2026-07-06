@@ -348,7 +348,7 @@ async function handleFormSubmit(e) {
         
         // 2. Setup Razorpay options using data from your backend
         const options = {
-            key: "rzp_test_TACbm478WmFfJF",
+            key: "rzp_live_TAHJejmh5AGTMu",
             amount: data.order.amount,
             currency: "INR",
             name: "AOI - Mystery Scoops",
