@@ -1,5 +1,5 @@
 let cartState = JSON.parse(localStorage.getItem('aoi_cart_memory')) || [];
-const deliveryFee = 250;
+const deliveryFee = 100;
 // function getShippingCharge(state) {
 //     // state = state.toLowerCase();
 //     if (state === "Andhra Pradesh") return 450;
