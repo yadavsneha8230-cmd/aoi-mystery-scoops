@@ -6,7 +6,11 @@ const crypto = require('crypto');
 const mongoose = require('mongoose'); // 1. Bring in Mongoose
 
 const app = express();
-app.use(cors());
+// ...
+app.use(cors({
+    origin: "https://aoi-mystery-scoops.vercel.app"
+}));
+
 app.use(express.json());
 
 // ==========================================
