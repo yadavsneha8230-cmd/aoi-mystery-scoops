@@ -1,0 +1,63 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AOI - Unbox Cute Surprises</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Navigation Header -->
+    <header>
+        <div class="logo-area" onclick="window.location.href='index.html'">
+            <img src="img/aoi.jpeg" alt="AOI Logo" class="logo-img" onerror="this.style.display='none'">
+            <!-- <span class="logo-fallback">aoi</span> -->
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html" id="nav-home">Home</a></li>
+                <li><a class="active" href="mystery-scoop.html" id="nav-mystery">Mystery Scoops</a></li>
+                <li><a href="mystery-scoop.html" id="nav-products">Products</a></li>
+                <li><a href="about.html" id="nav-about">About</a></li>
+            </ul>
+        </nav>
+        <div class="nav-icons">
+            <!-- <i class="fa-solid fa-magnifying-glass search-btn"></i> -->
+            <div class="cart-icon" onclick="window.location.href='cart.html'">
+                <i class="fa-solid fa-shopping-bag"></i>
+                <span class="cart-count" id="global-cart-counter">0</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="section-p1">
+        <h2 class="section-title">All Products</h2>
+        <div class="ribbon-separator"><span>🎀</span></div>
+        
+        <div class="products-grid">
+            <div class="product-card" onclick="window.location.href='1product.html'">
+                <div class="product-img-wrapper"><img src="img/ms.jpeg"></div>
+                <h3 class="product-title">Classic Scoop</h3>
+                <div class="product-price">₹599.00</div>
+            </div>
+            <div class="product-card" onclick="window.location.href='2product.html'">
+                <div class="product-img-wrapper"><img src="img/ms.jpeg"></div>
+                <h3 class="product-title">Premium Scoop</h3>
+                <div class="product-price">₹1,099.00</div>
+            </div>
+            <div class="product-card" onclick="window.location.href='3product.html'">
+                <div class="product-img-wrapper"><img src="img/ms.jpeg"></div>
+                <h3 class="product-title">Your Lucky scoop</h3>
+                <div class="product-price">₹1,999.00</div>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

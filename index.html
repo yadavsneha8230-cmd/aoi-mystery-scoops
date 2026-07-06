@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AOI - Unbox Cute Surprises</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Navigation Header -->
+    <header>
+        <div class="logo-area" onclick="window.location.href='index.html'">
+            <img src="img/aoi.jpeg" alt="AOI Logo" class="logo-img" onerror="this.style.display='none'">
+            <!-- <span class="logo-fallback">aoi</span> -->
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html" id="nav-home">Home</a></li>
+                <li><a href="mystery-scoop.html" id="nav-mystery">Mystery Scoops</a></li>
+                <li><a href="mystery-scoop.html" id="nav-products">Products</a></li>
+                <li><a href="about.html" id="nav-about">About</a></li>
+            </ul>
+        </nav>
+        <div class="nav-icons">
+            <!-- <i class="fa-solid fa-magnifying-glass search-btn"></i> -->
+            <div class="cart-icon" onclick="window.location.href='cart.html'">
+                <i class="fa-solid fa-shopping-bag"></i>
+                <span class="cart-count" id="global-cart-counter">0</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Content Layout from Screenshot 2026-07-06 at 8.40.02 AM.jpg -->
+    <main class="hero-container">
+        <div class="hero-content">
+            <div class="badge">✨ Exciting surprises in every box!</div>
+            <h1>Unbox Cute Surprises. <span class="heart-emoji">💗</span></h1>
+            <p>
+                Discover mystery scoops filled with adorable surprises you'll actually love. From 
+                <span class="highlight-text">bracelets</span>, 
+                <span class="highlight-text">necklaces</span>, 
+                <span class="highlight-text">keychains</span>, 
+                <span class="highlight-text">purses</span>, 
+                <span class="highlight-text">accessories</span>, and more every scoop is thoughtfully packed with cute finds.
+            </p>
+            <p>You can even customize your scoop based on your interests, making every unboxing feel extra special.</p>
+            
+            <div class="price-tag">Starting at <span>₹599</span></div>
+
+            <a href="mystery-scoop.html" class="cta-btn">Shop Mystery Scoops 🎀</a>
+
+            <div class="mini-trust-badges">
+                <div class="mini-badge"><i class="fa-solid fa-gift"></i> Curated with love</div>
+                <div class="mini-badge">Exciting surprises</div>
+                <div class="mini-badge"><i class="fa-solid fa-heart"></i> Made to make you smile</div>
+            </div>
+        </div>
+
+        <div class="hero-visual">
+            <div class="showcase-card">
+                <span class="star-sparkle">✨</span>
+                <!-- Replace with your actual packed box screenshot if available locally -->
+                <img src="img/shn.jpeg" alt="Cute Packed Box" class="main-showcase-img">
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

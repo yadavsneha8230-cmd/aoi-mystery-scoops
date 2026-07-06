@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AOI - Unbox Cute Surprises</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Navigation Header -->
+    <header>
+        <div class="logo-area" onclick="window.location.href='index.html'">
+            <img src="img/aoi.jpeg" alt="AOI Logo" class="logo-img" onerror="this.style.display='none'">
+            <!-- <span class="logo-fallback">aoi</span> -->
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html" id="nav-home">Home</a></li>
+                <li><a class="active" href="mystery-scoop.html" id="nav-mystery">Mystery Scoops</a></li>
+                <li><a href="mystery-scoop.html" id="nav-products">Products</a></li>
+                <li><a href="about.html" id="nav-about">About</a></li>
+            </ul>
+        </nav>
+        <div class="nav-icons">
+            <!-- <i class="fa-solid fa-magnifying-glass search-btn"></i> -->
+            <div class="cart-icon" onclick="window.location.href='cart.html'">
+                <i class="fa-solid fa-shopping-bag"></i>
+                <span class="cart-count" id="global-cart-counter">0</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="product-details-layout">
+        <div class="product-main-visual">
+            <img id="detail-img" src="img/ms.jpeg">
+        </div>
+        <div class="product-info-panel">
+            <h2 id="detail-title">Classic Scoop</h2>
+            <div class="detail-price" id="detail-price">₹599.00</div>
+            
+            <label class="custom-field-label">Any 2 products you'd like to have (optional)</label>
+            <input type="text" id="custom-exclusion-input" class="custom-input-box" placeholder="e.g. no stickers ">
+            <div class="char-counter">0/500</div>
+            <label class="quantity-label">Quantity *</label>
+            <div class="quantity-counter">
+                <button onclick="adjustFormQty(-1)">-</button>
+                <input type="text" id="form-qty-val" value="1" readonly>
+                <button onclick="adjustFormQty(1)">+</button>
+            </div>
+            
+            <button class="add-to-cart-btn" onclick="executeAddToCart()">Add to Cart</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

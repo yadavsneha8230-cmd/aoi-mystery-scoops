@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AOI - Unbox Cute Surprises</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Navigation Header -->
+    <header>
+        <div class="logo-area" onclick="window.location.href='index.html'">
+            <img src="img/aoi.jpeg" alt="AOI Logo" class="logo-img" onerror="this.style.display='none'">
+            <!-- <span class="logo-fallback">aoi</span> -->
+        </div>
+        <nav>
+            <ul id="sneha">
+                <li><a href="index.html" id="nav-home">Home</a></li>
+                <li><a href="mystery-scoop.html" id="nav-mystery">Mystery Scoops</a></li>
+                <li><a href="mystery-scoop.html" id="nav-products">Products</a></li>
+                <li><a class="active" href="about.html" id="nav-about">About</a></li>
+            </ul>
+        </nav>
+        <div class="nav-icons">
+            <!-- <i class="fa-solid fa-magnifying-glass search-btn"></i> -->
+            <div class="cart-icon" onclick="window.location.href='cart.html'">
+                <i class="fa-solid fa-shopping-bag"></i>
+                <span class="cart-count" id="global-cart-counter">0</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="section-p1">
+        <h2 class="section-title">Your Cart</h2>
+        <div class="ribbon-separator"><span>🎀</span></div>
+
+        <div id="empty-cart-state" style="display:none; padding:40px;">
+            <h3>Your cart is empty</h3>
+            <a href="mystery-scoop.html">Continue Browsing</a>
+        </div>
+
+        <div id="populated-cart-state" class="cart-content-layout">
+            <table>
+                <thead>
+                    <tr>
+                        <td>Remove</td>
+                        <td>Image</td>
+                        <td>Product</td>
+                        <td>Exclusions</td>
+                        <td>Price</td>
+                        <td>Quantity</td>
+                        <td>Subtotal</td>
+                    </tr>
+                </thead>
+                <tbody id="cart-items"></tbody>
+            </table>
+
+            <div class="order-summary-panel">
+                <h3>Order Summary</h3>
+                <div class="summary-row" style="margin-top:15px;"><span>Subtotal</span><span id="summary-subtotal">₹0.00</span></div>
+                <div class="summary-row"><span>Delivery</span><span>₹250.00</span></div>
+                <div class="summary-row total-row"><span>Total</span><span id="summary-grandtotal">₹0.00</span></div>
+                <button class="add-to-cart-btn" style="margin-top:15px;" onclick="initiateCheckoutWorkflow()">Proceed to Checkout</button>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
