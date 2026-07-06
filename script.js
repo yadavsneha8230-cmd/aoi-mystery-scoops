@@ -363,6 +363,7 @@ async function handleFormSubmit(e) {
                         razorpay_payment_id: response.razorpay_payment_id,
                         razorpay_signature: response.razorpay_signature,
                         customerData: customerData,
+                        cartItems: cartState,
                         amount: finalTotal
                     })
                 });
