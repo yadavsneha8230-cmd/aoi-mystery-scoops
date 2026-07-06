@@ -110,12 +110,13 @@ function adjustFormQty(amt) {
 
 
         // end 
+// REPLACE your old executeAddToCart function with this:
 function executeAddToCart() {
     let title = document.getElementById('detail-title')?.innerText || "Mystery Scoop Selection";
     let priceText = document.getElementById('detail-price')?.innerText || "₹599";
-    let cleanedPrice = parseFloat(priceText.replace(/[^0-9.]/g, '')) || 599;
+    let cleanedPrice = parseFloat(priceText.replace(/[^0-9]/g, '')) || 599;
     let image = document.getElementById('detail-img')?.src || "";
-    
+
     let qty = parseInt(document.getElementById('form-qty-val')?.value) || 1;
     let exclusion = document.getElementById('custom-exclusion-input')?.value.trim() || "None";
 
@@ -127,7 +128,7 @@ function executeAddToCart() {
     }
 
     localStorage.setItem('aoi_cart_memory', JSON.stringify(cartState));
-    alert("✨ Successfully added items to your basket!");
+    alert("Successfully added items to your basket!");
     synchronizeCartCounterUI();
 }
 
@@ -317,99 +318,76 @@ function updateCheckoutSummaryCosts(subtotal) {
 // ==========================================
 // RAZORPAY CHECKOUT & PAYMENT HANDLER
 // ==========================================
+// REPLACE your old handleFormSubmit function with this:
 async function handleFormSubmit(e) {
-    e.preventDefault(); // Stops the page from refreshing when you click submit
-
-    // 1. Grab customer data from your HTML inputs
+    e.preventDefault(); 
+    
     const customerData = {
         name: document.getElementById('cust-fname').value + " " + document.getElementById('cust-lname').value,
         email: document.getElementById('cust-email').value,
         phone: document.getElementById('cust-phone').value
     };
 
-    // 2. Calculate Final Total (Subtotal + Delivery)
     let subtotal = 0;
     cartState.forEach(item => subtotal += (item.price * item.qty));
-    
-    // Using the deliveryFee variable you defined at the top of your file (100)
-    const finalTotal = subtotal + deliveryFee; 
+    const finalTotal = subtotal + 100; // Assuming 100 is your delivery fee
 
-    // 3. Update Button State to show it's loading
     const payBtn = document.getElementById('pay-btn');
-    const originalText = payBtn.innerText;
     payBtn.innerText = "Processing...";
     payBtn.disabled = true;
 
     try {
-        // 4. Ask your Node.js backend to create an Order ID
+        // 1. Get Order ID from your Render backend
         const response = await fetch('https://aoi-mystery-scoops.onrender.com/create-order', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ amount: finalTotal })
         });
-        
-        if (!response.ok) throw new Error("Backend not responding properly");
-        const data = await response.json();
 
-        // 5. Open Razorpay Popup
+        const data = await response.json();
+        
+        // 2. Setup Razorpay options using data from your backend
         const options = {
-            "key": "rzp_test_TACbm478WmFfJF", // Your Razorpay Test Key
-            "amount": data.order.amount,
-            "currency": "INR",
-            "name": "AOI - Mystery Scoops",
-            "order_id": data.order.id,
-            "prefill": {
-                "name": customerData.name,
-                "email": customerData.email,
-                "contact": customerData.phone
-            },
-            "theme": { "color": "#ff63a5" },
-            "handler": async function (response) {
-                // 6. On Success: Verify payment with backend
+            key: "rzp_test_TACbm478WmFfJF",
+            amount: data.order.amount,
+            currency: "INR",
+            name: "AOI - Mystery Scoops",
+            order_id: data.order.id,
+            handler: async function (response) {
+                // 3. Verify payment with your Render backend
                 const verifyRes = await fetch('https://aoi-mystery-scoops.onrender.com/verify-payment', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(response)
+                    body: JSON.stringify({
+                        razorpay_order_id: response.razorpay_order_id,
+                        razorpay_payment_id: response.razorpay_payment_id,
+                        razorpay_signature: response.razorpay_signature,
+                        customerData: customerData,
+                        amount: finalTotal
+                    })
                 });
+                
                 const verifyData = await verifyRes.json();
-
                 if (verifyData.success) {
-                    // Show Congratulations Screen!
                     document.getElementById('checkout-form-screen').style.display = 'none';
-                    document.getElementById('success-screen').style.display = 'flex'; 
-                    
-                    // Clear the cart
-                    localStorage.removeItem('aoi_cart_memory'); 
-                    cartState = [];
-                    if(document.getElementById('global-cart-counter')) {
-                         document.getElementById('global-cart-counter').innerText = "0";
-                    }
+                    document.getElementById('success-screen').style.display = 'flex';
                 } else {
-                    alert("Payment verification failed! Please contact support.");
+                    alert("Payment verification failed!");
                 }
             }
         };
 
         const rzp = new Razorpay(options);
-        
-        // 7. On Failure: Let user try again
-        rzp.on('payment.failed', function (response){
-            alert("Payment failed! Reason: " + response.error.description);
-            payBtn.innerText = originalText;
-            payBtn.disabled = false;
-        });
-
         rzp.open();
+        payBtn.innerText = "Place Order & Pay";
+        payBtn.disabled = false;
 
     } catch (error) {
         console.error("Checkout Error:", error);
-        alert("Server error. Please make sure your Node.js backend (server.js) is running in the terminal!");
-        payBtn.innerText = originalText;
+        alert("Server error. Check Render logs!");
         payBtn.disabled = false;
     }
 }
-
-
 
 
 
