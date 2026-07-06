@@ -364,7 +364,7 @@ async function handleFormSubmit(e) {
                         razorpay_signature: response.razorpay_signature,
                         customerData: customerData,
                         amount: finalTotal,
-                        cartItems: cartState
+                     
                     })
                 });
                 
