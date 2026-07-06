@@ -342,7 +342,7 @@ async function handleFormSubmit(e) {
 
     try {
         // 4. Ask your Node.js backend to create an Order ID
-        const response = await fetch('http://localhost:3000/create-order', {
+        const response = await fetch('https://aoi-mystery-scoops.onrender.com/create-order', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ amount: finalTotal })
@@ -366,7 +366,7 @@ async function handleFormSubmit(e) {
             "theme": { "color": "#ff63a5" },
             "handler": async function (response) {
                 // 6. On Success: Verify payment with backend
-                const verifyRes = await fetch('http://localhost:3000/verify-payment', {
+                const verifyRes = await fetch('https://aoi-mystery-scoops.onrender.com/verify-payment', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(response)
