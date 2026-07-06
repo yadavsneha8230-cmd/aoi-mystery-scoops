@@ -30,7 +30,6 @@ const orderSchema = new mongoose.Schema({
     razorpayOrderId: String,
     razorpayPaymentId: String,
     amountPaid: Number,
-    items: Array,
     date: { type: Date, default: Date.now }
 });
 const Order = mongoose.model('Order', orderSchema);
@@ -79,7 +78,7 @@ app.post('/verify-payment', async (req, res) => {
                 customerPhone: customerData.phone,
                 razorpayOrderId: razorpay_order_id,
                 razorpayPaymentId: razorpay_payment_id,
-                items: cartItems,
+                
                 amountPaid: amount
             });
             
