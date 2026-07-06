@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>   
 </head>
 <body>
 
@@ -111,7 +112,7 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="final-place-order-btn">Place Order & Pay</button>
+                        <button type="submit" id="pay-btn" class="final-place-order-btn">Place Order & Pay</button>
                     </form>
                 </div>
             </div>
@@ -148,30 +149,6 @@
     </div>
 
     <script src="script.js"></script>
-    <script>
-        // Form submission layout screen transition process handler logic
-        function handleFormSubmit(e) {
-            e.preventDefault();
-            
-            // Collect the inputs to test if needed
-            const customerDetails = {
-                email: document.getElementById('cust-email').value,
-                name: document.getElementById('cust-fname').value + " " + document.getElementById('cust-lname').value,
-                phone: document.getElementById('cust-phone').value,
-                address: document.getElementById('cust-address').value,
-                city: document.getElementById('cust-city').value,
-                zip: document.getElementById('cust-zip').value
-            };
-            
-            console.log("Customer order metadata submitted successfully:", customerDetails);
-
-            // 1. Clear cart details memory from localStorage 
-            localStorage.removeItem('aoi_cart_memory');
-
-            // 2. Hide input panel form layout view and render the message window
-            document.getElementById('checkout-form-screen').style.display = 'none';
-            document.getElementById('success-screen').style.display = 'flex';
-        }
-    </script>
+    
 </body>
 </html>
