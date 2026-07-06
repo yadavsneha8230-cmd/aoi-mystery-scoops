@@ -1,41 +1,41 @@
 let cartState = JSON.parse(localStorage.getItem('aoi_cart_memory')) || [];
 const deliveryFee = 250;
-function getShippingCharge(state) {
-    // state = state.toLowerCase();
-    if (state === "Andhra Pradesh") return 450;
-    if (state === "Arunachal Pradesh") return 650;
-    if (state === "Assam") return 650;
-    if (state === "Bihar") return 350;
-    if (state === "Chhattisgarh") return 350;
-    if (state === "Delhi") return 150;
-    if (state === "Goa") return 450;
-    if (state === "Gujarat") return 350;
-    if (state === "Haryana") return 180;
-    if (state === "Himachal Pradesh") return 150;
-    if (state === "Jharkhand") return 350;
-    if (state === "Jammu and Kashmir") return 250;
-    if (state === "Karnataka") return 450;
-    if (state === "Kerala") return 550;
-    if (state === "Madhya Pradesh") return 250;
-    if (state === "Maharashtra") return 350;
-    if (state === "Manipur") return 650;
-    if (state === "Meghalaya") return 650;
-    if (state === "Mizoram") return 650;
-    if (state === "Nagaland") return 650;
-    if (state === "Odisha") return 350;
-    if (state === "Puducherry") return 550;
-    if (state === "Punjab") return 180;
-    if (state === "Rajasthan") return 250;
-    if (state === "Sikkim") return 650;
-    if (state === "Tamil Nadu") return 550;
-    if (state === "Telangana") return 450;
-    if (state === "Tripura") return 650;
-    if (state === "Uttarakhand") return 180;
-    if (state === "Uttar Pradesh") return 150;
-    if (state === "West Bengal") return 350;
+// function getShippingCharge(state) {
+//     // state = state.toLowerCase();
+//     if (state === "Andhra Pradesh") return 450;
+//     if (state === "Arunachal Pradesh") return 650;
+//     if (state === "Assam") return 650;
+//     if (state === "Bihar") return 350;
+//     if (state === "Chhattisgarh") return 350;
+//     if (state === "Delhi") return 150;
+//     if (state === "Goa") return 450;
+//     if (state === "Gujarat") return 350;
+//     if (state === "Haryana") return 180;
+//     if (state === "Himachal Pradesh") return 150;
+//     if (state === "Jharkhand") return 350;
+//     if (state === "Jammu and Kashmir") return 250;
+//     if (state === "Karnataka") return 450;
+//     if (state === "Kerala") return 550;
+//     if (state === "Madhya Pradesh") return 250;
+//     if (state === "Maharashtra") return 350;
+//     if (state === "Manipur") return 650;
+//     if (state === "Meghalaya") return 650;
+//     if (state === "Mizoram") return 650;
+//     if (state === "Nagaland") return 650;
+//     if (state === "Odisha") return 350;
+//     if (state === "Puducherry") return 550;
+//     if (state === "Punjab") return 180;
+//     if (state === "Rajasthan") return 250;
+//     if (state === "Sikkim") return 650;
+//     if (state === "Tamil Nadu") return 550;
+//     if (state === "Telangana") return 450;
+//     if (state === "Tripura") return 650;
+//     if (state === "Uttarakhand") return 180;
+//     if (state === "Uttar Pradesh") return 150;
+//     if (state === "West Bengal") return 350;
    
-    return 400;
-}
+//     return 400;
+// }
 document.addEventListener("DOMContentLoaded", () => {
 
     const stateField = document.getElementById("cust-state");
