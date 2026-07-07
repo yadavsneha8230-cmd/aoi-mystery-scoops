@@ -114,7 +114,7 @@ function adjustFormQty(amt) {
 function executeAddToCart() {
     let title = document.getElementById('detail-title')?.innerText || "Mystery Scoop Selection";
     let priceText = document.getElementById('detail-price')?.innerText || "₹599";
-    let cleanedPrice = parseFloat(priceText.replace(/[^0-9]/g, '')) || 599;
+    let cleanedPrice = parseFloat(priceText.replace(/[^0-9.]/g, '')) || 599;
     let image = document.getElementById('detail-img')?.src || "";
 
     let qty = parseInt(document.getElementById('form-qty-val')?.value) || 1;
