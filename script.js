@@ -1,71 +1,10 @@
+// 1. GLOBAL VARIABLES & INITIALIZATION
+// Load the cart from the browser's memory, or start an empty cart if nothing exists.
 let cartState = JSON.parse(localStorage.getItem('aoi_cart_memory')) || [];
+// Standard flat-rate shipping fee for all orders.
 const deliveryFee = 100;
-// function getShippingCharge(state) {
-//     // state = state.toLowerCase();
-//     if (state === "Andhra Pradesh") return 450;
-//     if (state === "Arunachal Pradesh") return 650;
-//     if (state === "Assam") return 650;
-//     if (state === "Bihar") return 350;
-//     if (state === "Chhattisgarh") return 350;
-//     if (state === "Delhi") return 150;
-//     if (state === "Goa") return 450;
-//     if (state === "Gujarat") return 350;
-//     if (state === "Haryana") return 180;
-//     if (state === "Himachal Pradesh") return 150;
-//     if (state === "Jharkhand") return 350;
-//     if (state === "Jammu and Kashmir") return 250;
-//     if (state === "Karnataka") return 450;
-//     if (state === "Kerala") return 550;
-//     if (state === "Madhya Pradesh") return 250;
-//     if (state === "Maharashtra") return 350;
-//     if (state === "Manipur") return 650;
-//     if (state === "Meghalaya") return 650;
-//     if (state === "Mizoram") return 650;
-//     if (state === "Nagaland") return 650;
-//     if (state === "Odisha") return 350;
-//     if (state === "Puducherry") return 550;
-//     if (state === "Punjab") return 180;
-//     if (state === "Rajasthan") return 250;
-//     if (state === "Sikkim") return 650;
-//     if (state === "Tamil Nadu") return 550;
-//     if (state === "Telangana") return 450;
-//     if (state === "Tripura") return 650;
-//     if (state === "Uttarakhand") return 180;
-//     if (state === "Uttar Pradesh") return 150;
-//     if (state === "West Bengal") return 350;
-   
-//     return 400;
-// }
-document.addEventListener("DOMContentLoaded", () => {
 
-    const stateField = document.getElementById("cust-state");
-
-    if(stateField){
-        stateField.addEventListener("change", function(){
-
-            let shipping = getShippingCharge(this.value);
-
-            let shippingBox = document.getElementById("shipping-charge");
-
-            if(shippingBox){
-                shippingBox.innerText = "₹" + shipping + ".00";
-            }
-
-            let subtotal = parseFloat(
-                document.getElementById("chk-subtotal")
-                .innerText.replace(/[₹,]/g,"")
-            );
-
-            document.getElementById("chk-grandtotal").innerText =
-                "₹" + (subtotal + shipping).toLocaleString("en-IN") + ".00";
-        });
-    }
-
-});
-
-// shipping charge calculation based on state selection closed
-
-
+// The "Bootstrapper": This runs automatically every time any page on the site loads.
 document.addEventListener("DOMContentLoaded", () => {
     synchronizeCartCounterUI();
     if (document.getElementById('cart-items')) {
@@ -74,6 +13,10 @@ document.addEventListener("DOMContentLoaded", () => {
     syncNavbarHighlightLinks();
 });
 
+
+// 2. UTILITIES & NAVIGATION
+
+// Highlights the active tab in the top navigation bar based on the current URL.
 function syncNavbarHighlightLinks() {
     let path = window.location.pathname;
     let homeTab = document.getElementById('nav-home');
@@ -91,6 +34,7 @@ function syncNavbarHighlightLinks() {
     else if (path.includes('about.html')) aboutTab?.classList.add('active');
 }
 
+// Adjusts the quantity input box up or down when the user clicks + or - on the product page.
 function adjustFormQty(amt) {
     let field = document.getElementById('form-qty-val');
     if (field) {
@@ -99,22 +43,13 @@ function adjustFormQty(amt) {
     }
 }
 
-// fgd about
-        // document.getElementById('nav-home').classList.remove('active');
-        // document.getElementById('nav-mystery').classList.remove('active');
-        // if(document.getElementById('nav-about')) document.getElementById('nav-about').classList.remove('active');
+// 3. CART MANAGEMENT
 
-        // if(viewId === 'home-view') document.getElementById('nav-home').classList.add('active');
-        // if(viewId === 'products-view') document.getElementById('nav-mystery').classList.add('active');
-        // if(viewId === 'about-view' && document.getElementById('nav-about')) document.getElementById('nav-about').classList.add('active'); 
-
-
-        // end 
-// REPLACE your old executeAddToCart function with this:
+// Grabs product details from the HTML, cleans the price, and adds the item to the cart array.
 function executeAddToCart() {
     let title = document.getElementById('detail-title')?.innerText || "Mystery Scoop Selection";
     let priceText = document.getElementById('detail-price')?.innerText || "₹599";
-    let cleanedPrice = parseFloat(priceText.replace(/[^0-9.]/g, '')) || 599;
+    let cleanedPrice = parseFloat(priceText.replace(/[^0-9.]/g, '')) || 599;  // Note: This includes your regex fix: /[^0-9.]/g
     let image = document.getElementById('detail-img')?.src || "";
 
     let qty = parseInt(document.getElementById('form-qty-val')?.value) || 1;
@@ -132,12 +67,14 @@ function executeAddToCart() {
     synchronizeCartCounterUI();
 }
 
+// Calculates the total number of items in the cart and updates the red badge icon on the navbar.
 function synchronizeCartCounterUI() {
     let total = cartState.reduce((sum, item) => sum + item.qty, 0);
     let counter = document.getElementById('global-cart-counter');
     if (counter) counter.innerText = total;
 }
 
+// Draws the table of cart items on the cart.html page and calculates the subtotal.
 function renderCartPageDashboard() {
     let itemsBody = document.getElementById('cart-items');
     let emptyBox = document.getElementById('empty-cart-state');
@@ -176,6 +113,7 @@ function renderCartPageDashboard() {
     document.getElementById('summary-grandtotal').innerText = "₹" + (calculatedSubtotal + deliveryFee).toLocaleString('en-IN') + ".00";
 }
 
+// Removes a specific item from the cart array and updates the browser's memory.
 function dropItem(index) {
     cartState.splice(index, 1);
     localStorage.setItem('aoi_cart_memory', JSON.stringify(cartState));
@@ -185,34 +123,34 @@ function dropItem(index) {
 // ==========================================
 // CHECKOUT SUMMARY HANDLING
 // ==========================================
-function renderCheckoutSummaryBlock() {
-    let container = document.getElementById('checkout-summary-items');
-    if (!container) return;
+// function renderCheckoutSummaryBlock() {
+//     let container = document.getElementById('checkout-summary-items');
+//     if (!container) return;
 
-    let subtotal = 0;
-    container.innerHTML = "";
+//     let subtotal = 0;
+//     container.innerHTML = "";
 
-    cartState.forEach(item => {
-        let rowTotal = item.price * item.qty;
-        subtotal += rowTotal;
+//     cartState.forEach(item => {
+//         let rowTotal = item.price * item.qty;
+//         subtotal += rowTotal;
 
-        container.innerHTML += `
-            <div class="checkout-mini-item" style="display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 10px; color: var(--text-muted);">
-                <span><strong>${item.name}</strong> (x${item.qty})</span>
-                <span>₹${rowTotal.toLocaleString('en-IN')}.00</span>
-            </div>
-            <div style="font-size:11px; margin-top:-8px; margin-bottom:12px; color:#999; padding-left:2px;">
-                Exclusions: ${item.exclusions}
-            </div>
-        `;
-    });
+//         container.innerHTML += `
+//             <div class="checkout-mini-item" style="display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 10px; color: var(--text-muted);">
+//                 <span><strong>${item.name}</strong> (x${item.qty})</span>
+//                 <span>₹${rowTotal.toLocaleString('en-IN')}.00</span>
+//             </div>
+//             <div style="font-size:11px; margin-top:-8px; margin-bottom:12px; color:#999; padding-left:2px;">
+//                 Exclusions: ${item.exclusions}
+//             </div>
+//         `;
+//     });
 
-    let chkSubtotal = document.getElementById('chk-subtotal');
-    let chkGrandtotal = document.getElementById('chk-grandtotal');
+//     let chkSubtotal = document.getElementById('chk-subtotal');
+//     let chkGrandtotal = document.getElementById('chk-grandtotal');
 
-    if (chkSubtotal) chkSubtotal.innerText = "₹" + subtotal.toLocaleString('en-IN') + ".00";
-    if (chkGrandtotal) chkGrandtotal.innerText = "₹" + (subtotal + deliveryFee).toLocaleString('en-IN') + ".00";
-}
+//     if (chkSubtotal) chkSubtotal.innerText = "₹" + subtotal.toLocaleString('en-IN') + ".00";
+//     if (chkGrandtotal) chkGrandtotal.innerText = "₹" + (subtotal + deliveryFee).toLocaleString('en-IN') + ".00";
+// }
 
 // Modify your DOMContentLoaded block or add this to check for checkout summary items on load
 document.addEventListener("DOMContentLoaded", () => {
@@ -238,7 +176,7 @@ window.onload = function() {
     console.log("DOM is ready. Running shared multi-page synchronization...");
     
     // Global function calls that run on all pages
-    synchronizeNavbarHighlightLinks(); // from Part 3
+    synNavbarHighlightLinks(); // from Part 3
     synchronizeCartCounterUI();        // from Part 1
 
     // Part A: Cart Page check and dynamic rendering
@@ -364,7 +302,7 @@ async function handleFormSubmit(e) {
                         razorpay_signature: response.razorpay_signature,
                         customerData: customerData,
                         amount: finalTotal,
-                     
+                        cartItems: cartState
                     })
                 });
                 
