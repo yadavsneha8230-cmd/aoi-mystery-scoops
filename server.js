@@ -30,6 +30,7 @@ const orderSchema = new mongoose.Schema({
     razorpayOrderId: String,
     razorpayPaymentId: String,
     amountPaid: Number,
+    cartItems: Array,
     date: { type: Date, default: Date.now }
 });
 const Order = mongoose.model('Order', orderSchema);
@@ -61,7 +62,7 @@ app.post('/create-order', async (req, res) => {
 // Endpoint 2: Verify AND Save to Database
 app.post('/verify-payment', async (req, res) => {
     // 4. We now receive customerData from the frontend
-    const { razorpay_order_id, razorpay_payment_id, razorpay_signature, customerData, amount } = req.body;
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature, customerData, amount , cartItems } = req.body;
     
     const body = razorpay_order_id + "|" + razorpay_payment_id;
     const expectedSignature = crypto
@@ -78,8 +79,8 @@ app.post('/verify-payment', async (req, res) => {
                 customerPhone: customerData.phone,
                 razorpayOrderId: razorpay_order_id,
                 razorpayPaymentId: razorpay_payment_id,
-                
-                amountPaid: amount
+                amountPaid: amount,
+                cartItems: cartItems
             });
             
             await newOrder.save(); // 5. Send it to the cloud database
