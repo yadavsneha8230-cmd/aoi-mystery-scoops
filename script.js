@@ -263,7 +263,11 @@ async function handleFormSubmit(e) {
     const customerData = {
         name: document.getElementById('cust-fname').value + " " + document.getElementById('cust-lname').value,
         email: document.getElementById('cust-email').value,
-        phone: document.getElementById('cust-phone').value
+        phone: document.getElementById('cust-phone').value,
+        address: document.getElementById('cust-address').value, // Check if this ID matches your HTML
+        city: document.getElementById('cust-city').value,       // Check if this ID matches your HTML
+        zip: document.getElementById('cust-zip').value,         // Check if this ID matches your HTML
+        state: document.getElementById('cust-state').value
     };
 
     let subtotal = 0;
