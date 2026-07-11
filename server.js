@@ -27,6 +27,7 @@ const orderSchema = new mongoose.Schema({
     customerName: String,
     customerEmail: String,
     customerPhone: String,
+    shippingAddress: Object,
     razorpayOrderId: String,
     razorpayPaymentId: String,
     amountPaid: Number,
@@ -77,6 +78,12 @@ app.post('/verify-payment', async (req, res) => {
                 customerName: customerData.name,
                 customerEmail: customerData.email,
                 customerPhone: customerData.phone,
+                shippingAddress: {
+                    street: customerData.address,
+                    city: customerData.city,
+                    zip: customerData.zip,
+                    state: customerData.state
+                },
                 razorpayOrderId: razorpay_order_id,
                 razorpayPaymentId: razorpay_payment_id,
                 amountPaid: amount,
