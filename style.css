@@ -707,3 +707,12 @@ table td {
     color: var(--text-muted);
     line-height: 1.6;
 }
+
+/* Mobile Responsive Fix for Checkout Page */
+@media (max-width: 768px) {
+    .checkout-grid-layout {
+        display: grid;
+        grid-template-columns: 1fr; /* This forces it to be one single column */
+        gap: 30px; /* Adds breathing room between the form and the summary */
+    }
+}
